@@ -43,29 +43,13 @@ function step!(o::Observable)
     notify(o)
 end
 
-
-
 n = 1000
 oa = precalcoffsets(n)
 
 a = Observable(map(x -> x < 0 ? 0 : 1, randn(n, n)))
 f, ax = heatmap(a, colormap = :grays, figure=(size=(600, 600),))
 hidedecorations!(ax);
-
-@time step!(a)
-@benchmark step!(a)
-
-
-plength = Int64[]
-@time for i in 1:20
-    plength = copy(a[])
-    step!(a)
-    if plength == a[]
-        #print(i)
-        return
-    end
-    #sleep(1/60)
-end
+f
 
 for i in 1:500
     plength = copy(a[])
@@ -76,6 +60,3 @@ for i in 1:500
     end
     sleep(1/165)
 end
-
-@time step!(a)
-@btime step!(a)
